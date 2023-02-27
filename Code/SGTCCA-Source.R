@@ -29,7 +29,6 @@
 #' @param pheno A vector with phenotype data of interest to check the correlation between summarization score and phenotype for network trimming (currently only support single phenotype).
 #' @param min_mod_size The minimum desirable module size after network trimming.
 #' @param max_mod_size The maximum desirable module size after network trimming.
-#' @param network_preference Whether a larger or smaller network size is preferred, with the choice of either 'small' or 'large'.
 #' @param saving_dir directory where users want to save the result.
 
 
@@ -38,7 +37,7 @@ SGTCCA_Net <- function(data_list, correlation_list, num_solutions = 1,
                        common_subsamp_prop = 0.08, distinct_subsamp_prop = 0.02,
                        num_workers = 5, num_iterations = 10, network_exclude_data = NULL,
                        data_type = NULL, summary_method = 'NetSHy', pheno = NULL,
-                       min_mod_size = 20, max_mod_size = 300, network_preference = 'small', saving_dir = NULL)
+                       min_mod_size = 20, max_mod_size = 300, saving_dir = NULL)
 {
   # check if pheno argument is provided
   if (is.null(pheno))
@@ -913,7 +912,7 @@ Network_Summarization_PPR_single <- function(Abar, CorrMatrix, data,
   rank_value <- sort(ranking$vector, decreasing = TRUE)
   # Choose to include only the top proteins as we desired
   summary_correlation <- c()
-  for (i in min_mod_size: max_mod_size)
+  for (i in min_mod_size : max_mod_size)
   { 
     # print(paste0('iteration:', i))
     newM.node <- which(colnames(Abar) %in% rank_names[1:i])
@@ -960,13 +959,18 @@ Network_Summarization_PPR_single <- function(Abar, CorrMatrix, data,
       score_frame = cbind(score_frame, pca_x1_pc1$pc1)
   }
   
-  
-  cormat <- round(x = cor(score_frame), digits = 2)
-  cormat <- abs(cormat)
   corr_pheno <- abs(cor(score_frame, Pheno))
-  # finally calculate the optimal entwork size 
-  mod_size <- selection(cormat[,1], summary_correlation,cor_cut = 0.8, default_size = min_mod_size, network_preference = network_preference)
-  # print(mod_size)
+  
+  candidate_size_1 <- min(which(corr_pheno > (0.9 * max(corr_pheno))))
+  cormat <-  abs(round(x = cor(score_frame[,candidate_size_1:(max_mod_size - min_mod_size + 1)]), digits = 2))
+  candidate_size_2 <- max(which(cormat[,1] > 0.8))
+  print(candidate_size_2)
+  mod_size <- candidate_size_2 + candidate_size_1 - 2 + min_mod_size
+  
+  
+  # finally calculate the optimal network size 
+  #  mod_size <- selection(cormat[,1], summary_correlation,cor_cut = 0.8, default_size = min_mod_size, network_preference = network_preference)
+  print(mod_size)
   # obtain optimal result
   newM.node <- which(colnames(Abar) %in% rank_names[1:mod_size])
   sub_type <- type[newM.node]
@@ -1022,9 +1026,7 @@ Network_Summarization_PPR_single <- function(Abar, CorrMatrix, data,
        mod_size, sub_type, summary_correlation, correlation_sub,
        file = paste0(saving_dir, "/size_", mod_size,"_net_",ModuleIdx,".Rdata"))
   
-  cat(paste0('The final network size is: ', nrow(M), ' with PC1 correlation w.r.t. phenotype to be: ', pc_correlation[1]))
+  cat(paste0('The final network size is: ', nrow(M), ' with PC1 correlation w.r.t. phenotype to be: ', round(pc_correlation[1], 3)))
   #return(c(nrow(M),pc_correlation))
 }
-
-
 
