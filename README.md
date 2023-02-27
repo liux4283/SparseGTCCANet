@@ -7,6 +7,6 @@ The Sparse Generalized Tensor Canonical Correlation Network Inference (SGTCCA-Ne
 
 In general, this network analysis pipeline can be partitioned into multiple steps:
 
-\begin{itemize}
+$\begin{itemize}
 \item
-\end{itemize}
+\end{itemize}$
