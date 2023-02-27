@@ -18,6 +18,11 @@ Step 1 and 2 is similar to SmCCNet workflow, but step 3 is novel for SGTCCA-Net 
 - 2. Starting from a minimally possible network size $m_1$ (defined by users), include the top $m_1$ molecular features, calculate NetSHy summarization scores.
 - 3. Iterate the following steps until reaching the maxmimally possible network size $m_2$ (defined by users):
   - Include one more molecular feature into the network based on PageRank score, then calculate NetSHy score for this updated network.
-  - Calculate the correlation between this network summarization score and (1) phenotype and (2) summarization score at minimal network size.
-- 4. 
+  - Calculate the correlation between this network summarization score and phenotype, call it $\rho$. 
+- 4. Find minimal network size $k$ with $\rho$ within the 80% range (this value can be defined by user) of the maximum correlation w.r.t. phenotype.
+- 5. For each network size that is greater than $k$ and within the 80% rankge of the maximum correlation w.r.t. phenotype, calculate the correlation between summarization score at each network size and $k$.
+- 6. Based on step 5, setting up and correlation threshold (defined by user), such that only candidate network size with correlation (calculated in step 5) that pass the threshold will be kept.
+- 7. Based on the final network size candidates, select the maxmimum/minimum of them depending on user's preference.
+
+All the source code for SGTCCA-Net has been included under the code folder along with an example script. Most of the parameters are used in simulation studies and don't need to be changed. The algorithm is totally parallizable and this feature has been included in the code. 
   
