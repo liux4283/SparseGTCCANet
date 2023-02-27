@@ -7,6 +7,8 @@ The Sparse Generalized Tensor Canonical Correlation Network Inference (SGTCCA-Ne
 
 In general, this network analysis pipeline can be partitioned into multiple steps:
 
-$\begin{itemize}
-\item
-\end{itemize}$
+- Molecular feature weights extraction with Sparse Generalized Tensor Canonical Correlation Analysis.
+- Global network construction based on molecular feature weights.
+- Network prunning with PageRank algorithm and NetSHy summarization score.
+
+
