@@ -11,4 +11,7 @@ In general, this network analysis pipeline can be partitioned into multiple step
 - Global network construction based on molecular feature weights.
 - Network prunning with PageRank algorithm and NetSHy summarization score.
 
+Step 1 and 2 is similar to SmCCNet workflow, but step 3 is novel for SGTCCA-Net pipeline. It is a stepwise approach with a combination of different evaluation metrics. Assume in global network there are $p$ molecular features, then this approach is given by:
 
+- Calculate PageRank score for all $p$ molecular features, and rank them accordingly.
+- Starting from a minimally possible network size $m_1$ (defined by users), 
