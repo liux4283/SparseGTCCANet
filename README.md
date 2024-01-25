@@ -2,8 +2,8 @@
 
 The Sparse Generalized Tensor Canonical Correlation Network Inference (SGTCCA-Net) is a novel multi-omics network analysis pipeline that is designed for extract higher-order/pair-wise correlation exists in the multi-omics data. Below is the workflow of this novel network analysis pipeline:
 
+![gtcca_fig2 (1)](https://github.com/liux4283/SparseGTCCANet/assets/36642788/fce61d4f-de8c-48dc-94de-ae265b1ab96b)
 
-![Figures](https://user-images.githubusercontent.com/36642788/221464373-dcc8d03d-b410-484c-9d0f-1d3c89028d20.png)
 
 In general, this network analysis pipeline can be partitioned into multiple steps:
 
